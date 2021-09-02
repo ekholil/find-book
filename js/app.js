@@ -6,6 +6,7 @@ const loadBooks = () => {
     const container = document.getElementById('container')
     const noAuthor = "Author not found";
     const noPublisher = "Publisher not found";
+    let resultNum;
     //add event listener
     searchBtn.addEventListener('click', () => {
         const searchText = searchField.value;
@@ -19,11 +20,18 @@ const loadBooks = () => {
 
     // function for show book data 
     const showData = data => {
+        if(data.numFound < 20){
+            resultNum = data.numFound;
+        } else {
+            resultNum = 20;
+        }
+
+
         if(data.numFound === 0){
             result.innerText = `No result found for ${searchField.value}`
             
         } else {
-            result.innerText = `Showing 20 of ${data.numFound} Results for ${searchField.value}`
+            result.innerText = `Showing ${resultNum} of ${data.numFound} Results for ${searchField.value}`
             
         }
         const books = data.docs.slice(0,20)
